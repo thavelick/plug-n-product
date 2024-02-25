@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign-In!{% endblock %}
+
+{% block content %}
+<div class="signin-container">
+  <h1>Sign In</h1>
+  <form>
+    <fieldset>
+      <label>
+        Email:
+        <input name="email" placeholder="name@email.com" autocomplete="email" />
+      </label>
+      <label>
+        Password:
+        <input type="password" name="password" placeholder="Enter password" id="password" />
+      </label>
+      <label>
+        <input type="checkbox" name="show_password" /> Show password
+      </label>
+    </fieldset>
+
+    <input type="submit" value="Sign In" />
+  </form>
+</div>
+{% endblock %}
+

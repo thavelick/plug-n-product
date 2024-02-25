@@ -11,8 +11,8 @@ MAKEFLAGS += --no-builtin-rules
 # ---------------------- COMMANDS ---------------------------
 
 dev: # Kick-off local dev environment & start coding! 💻
-	@echo "Starting dev env (e.g. npm start).."
-	@sleep 1000
+	@echo "Starting dev environment.."
+	flask run --debug
 
 setup: # Setup local dev environment
 	@echo "Installing.."

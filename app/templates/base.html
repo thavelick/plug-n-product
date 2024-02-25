@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/pico.jade.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/style.css') }}">
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <nav>
+          <ul>
+            <li>
+              <a href="{{ url_for('index') }}">Home</a>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <a href="{{ url_for('signin') }}">Sign-in</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main class="container">
+      {% block content %}{% endblock %}
+    </main>
+    <footer>
+      <div class="container">
+        <section>
+          <nav>
+            <ul>
+              <li>
+                <strong>About</strong>
+              </li>
+              <li>
+                <a class="secondary" href="https://github.com/thavelick/BootyStrap">Source</a>
+              </li>
+              <li>
+                <a class="secondary" href="https://tristanhavelick.com">Author</a>
+              </li>
+            </ul>
+          </nav>
+        </section>
+        <section>
+          <p>Copyright &copy; 2024 Tristan Havelick</p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>

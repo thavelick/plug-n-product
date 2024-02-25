@@ -1,0 +1,25 @@
+footer {
+  font-size: 14px;
+}
+
+footer nav ul {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+footer nav ul li {
+  padding-bottom: 2.5px;
+  padding-top: 2.5px;
+}
+
+.signin-container {
+  max-width: 600px;
+  display: block;
+  padding: 0 auto;
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 950px;
+  }
+}
