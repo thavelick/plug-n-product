@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Sign-In!{% endblock %}
+{% block title %}Sign-In{% endblock %}
 
 {% block content %}
 <div class="signin-container">
@@ -13,10 +13,10 @@
       </label>
       <label>
         Password:
-        <input type="password" name="password" placeholder="Enter password" id="password" />
+        {% include 'signin_password.html' %}
       </label>
       <label>
-        <input type="checkbox" name="show_password" /> Show password
+        <input type="checkbox" name="show_password" hx-post="/sign-in/password" hx-target="#password" hx-swap="outerHTML" /> Show password
       </label>
     </fieldset>
 
