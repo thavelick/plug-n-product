@@ -47,7 +47,10 @@ def create_app(test_config=None):
                 session["user_id"] = user["id"]
                 return redirect(url_for("index"))
 
-            flash("Error! Please try again.")
+            flash(
+                "Error! Could not log you in. Please check your credentials and try again.",
+                "error",
+            )
 
         return render_template("signin.html", email=request.form.get("email", ""))
 
