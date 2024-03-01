@@ -17,58 +17,8 @@ dev: # Kick-off local dev environment & start coding! 💻
 setup: # Setup local dev environment
 	@echo "Installing.."
 	pip install -r requirements.txt
+	flask init-db
 	@echo "Done."
-
-purge: check-confirm # Clean up all local dev artifacts (node_modules, etc.)
-	@echo "Purging.."
-	@sleep 1
-	@echo "Done."
-
-pr: # Create a GitHub Pull Request via https://cli.github.com/
-	@gh pr create
-
-script: # Run .sh script and pass parameters
-	@./script.sh $(args)
-
-push: arg-target check-dotenv
-	@echo "Deploying to $(target).."
-	@sleep 1
-	@echo "Done. Successfully deployed to $(target)!"
-
-db.init: # Initialize DB for development
-	@echo "DB initialized."
-
-db.migrate: env-MYSQL_HOST # Run DB migrations
-	@echo "DB migrated."
-
-deploy: arg-target check-dotenv # E.g. make deploy target=production
-	@echo "Deploying to $(target).."
-	@sleep 1
-	@echo "Done. Successfully deployed to $(target)!"
-
-logs:
-	tail -f *.log
-
-# ----------------- COMMON CHECKS  --------------------------
-
-env-MYSQL_HOST: # [CHECK] Checks for env variable
-	@if test -z ${MYSQL_HOST}; then echo -e "${ERR}Missing ENV VAR: MYSQL_HOST. Use 'ENV_VAR=value make <cmd>'${NC}"; exit 1; fi
-
-arg-target: # [CHECK] Checks if param is present: make key=value
-	@if [ "$(target)" = "" ]; then echo -e "${ERR}Missing param: target. Use 'make <cmd> arg=value'${NC}"; exit 1; fi
-
-check-confirm: # Simple y/N confirmation
-	@echo -n "Are you sure? [y/N] " && read ans && [ $${ans:-N} = y ] || (echo "Aborted!" && exit 1)
-
-check-dotenv: # [CHECK] Checks if .env file is present
-	@if [ ! -f ".env" ]; then echo -e "${ERR}Missing .env file. Run 'cp .env.example .env'${NC}"; exit 1; fi
-
-check-node-modules: # [CHECK] Checks if /node_modules are present
-	@if [ ! -d "node_modules" ]; then echo -e "${ERR}Missing /node_modules. Run npm / yarn install.${NC}"; exit 1; fi
-
-check-env-vars: # [CHECK] Checks if env vars are present
-	@if test -z ${AWS_ACCESS_KEY_ID}; then echo -e "${ERR}Missing env var: AWS_ACCESS_KEY_ID${NC}"; exit 1; fi
-	@if test -z ${AWS_SECRET_ACCESS_KEY}; then echo -e "${ERR}Missing env var: AWS_SECRET_ACCESS_KEY${NC}"; exit 1; fi
 
 # -----------------------------------------------------------
 # CAUTION: If you have a file with the same name as make

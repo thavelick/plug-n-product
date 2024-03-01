@@ -5,11 +5,11 @@
 {% block content %}
 <div class="signin-container">
   <h1>Sign In</h1>
-  <form>
+  <form action="/sign-in" method="POST">
     <fieldset>
       <label>
         Email:
-        <input name="email" placeholder="name@email.com" autocomplete="email" />
+        <input name="email" placeholder="name@email.com" autocomplete="email" value="{{ email }}" />
       </label>
       <label>
         Password:
