@@ -23,7 +23,7 @@ footer nav ul li {
   padding-top: 2.5px;
 }
 
-.signin-container {
+.signin-container, .register-container {
   max-width: 600px;
   display: block;
   padding: 0 auto;

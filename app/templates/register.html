@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}Sign-In{% endblock %}
+{% block title %}Register{% endblock %}
 
 {% block content %}
-<div class="signin-container">
-  <h1>Sign In</h1>
-  <form action="/sign-in" method="POST">
+<div class="register-container">
+  <h1>Register</h1>
+  <form action="/register" method="POST">
     <fieldset>
       <label>
         Email:
@@ -16,11 +16,11 @@
         {% include 'password_field.html' %}
       </label>
       <label>
-        <input type="checkbox" name="show_password" hx-post="/sign-in/password" hx-target="#password" hx-swap="outerHTML" /> Show password
+        <input type="checkbox" name="show_password" hx-post="/register/password" hx-target="#password" hx-swap="outerHTML" /> Show password
       </label>
     </fieldset>
 
-    <input type="submit" value="Sign In" />
+    <input type="submit" value="Register" />
   </form>
 </div>
 {% endblock %}
