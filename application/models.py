@@ -9,6 +9,15 @@ class UserCreationError(Exception):
 
 class User(namedtuple("User", "id email password created_on")):
     @staticmethod
+    def from_dict(record):
+        return User(
+            id=record["id"],
+            email=record["email"],
+            password=record["password"],
+            created_on=record["created_on"],
+        )
+
+    @staticmethod
     def get(user_id):
         if user_id is None:
             return None
@@ -21,7 +30,7 @@ class User(namedtuple("User", "id email password created_on")):
         if record is None:
             return None
 
-        return User(**record)
+        return User.from_dict(record)
 
     @staticmethod
     def authenticate(email, unhashed_password):
@@ -33,7 +42,7 @@ class User(namedtuple("User", "id email password created_on")):
         if not record:
             return None
 
-        user = User(**record)
+        user = User.from_dict(record)
         if not check_password_hash(user.password, unhashed_password):
             return None
 
