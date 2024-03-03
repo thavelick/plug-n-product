@@ -12,7 +12,7 @@ MAKEFLAGS += --no-builtin-rules
 
 dev: # Kick-off local dev environment & start coding! 💻
 	@echo "Starting dev environment.."
-	flask run --debug
+	flask --app application run --debug
 
 setup: # Setup local dev environment
 	@echo "Installing.."

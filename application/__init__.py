@@ -17,6 +17,7 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         DATABASE=os.path.join(app.instance_path, "app.sqlite"),
+        SECRET_KEY="KnoX5LcT5wnaxDNYiW0vdJQhUW6NU",  # Just for development
     )
 
     if not test_config:
@@ -88,7 +89,7 @@ def create_app(test_config=None):
 
     @app.route("/register/password", methods=["POST"])
     @app.route("/sign-in/password", methods=["POST"])
-    def signin_password():
+    def password_field():
         password_input_type = "password"
         if request.form.get("show_password") == "on":
             password_input_type = "text"
