@@ -44,7 +44,21 @@ def test_signin(client, auth):
     with client:
         client.get("/")
         assert session["user_id"] == 1
-        assert g.user["email"] == "test@example.com"
+        assert g.user.email == "test@example.com"
+
+
+def test_session_with_invalid_user_id(client, auth, app):
+    # First, sign in as a user, then manually delete the user from the database
+    # and try to get the home page. The user should be logged out.
+
+    auth.signin()
+
+    with app.app_context():
+        with get_db_connection() as connection:
+            connection.execute("DELETE FROM user WHERE id = 1")
+
+    with client:
+        assert "Sign-in" in client.get("/").data.decode("utf-8")
 
 
 @pytest.mark.parametrize(

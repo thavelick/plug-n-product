@@ -9,8 +9,8 @@ from flask import (
     session,
     url_for,
 )
-from werkzeug.security import check_password_hash, generate_password_hash
 from . import db
+from .models import User, UserCreationError
 
 
 def create_app(test_config=None):
@@ -39,30 +39,12 @@ def create_app(test_config=None):
         if request.method == "POST":
             email = request.form["email"]
             password = request.form["password"]
-            connection = db.get_db_connection()
-            error = None
-
-            if not email:
-                error = "Email is required."
-            elif not password:
-                error = "Password is required."
-            elif len(password) < 10:
-                error = "Password must be at least 10 characters long."
-
-            if not error:
-                try:
-                    connection.execute(
-                        "INSERT INTO user (email, password) VALUES (?, ?)",
-                        (email, generate_password_hash(password)),
-                    )
-                    connection.commit()
-                except connection.IntegrityError:
-                    error = "Sorry that account is already registered. Please sign in."
-                else:
-                    return redirect(url_for("signin"))
-
-            flash(error, "error")
-
+            try:
+                User.create(email, password)
+            except UserCreationError as error:
+                flash(str(error), "error")
+            else:
+                return redirect(url_for("signin"))
         return render_template("register.html", email=request.form.get("email", ""))
 
     @app.route("/sign-in", methods=["GET", "POST"])
@@ -71,13 +53,10 @@ def create_app(test_config=None):
             email = request.form["email"]
             password = request.form["password"]
 
-            connection = db.get_db_connection()
-            user = connection.execute(
-                "SELECT * FROM user WHERE email = ?", (email,)
-            ).fetchone()
-            if user and check_password_hash(user["password"], password):
+            user = User.authenticate(email, password)
+            if user:
                 session.clear()
-                session["user_id"] = user["id"]
+                session["user_id"] = user.id
                 return redirect(url_for("index"))
 
             flash(
@@ -107,15 +86,7 @@ def create_app(test_config=None):
     @app.before_request
     def load_logged_in_user():
         user_id = session.get("user_id")
-
-        if user_id is None:
-            g.user = None
-        else:
-            g.user = (
-                db.get_db_connection()
-                .execute("SELECT * FROM user WHERE id = ?", (user_id,))
-                .fetchone()
-            )
+        g.user = User.get(user_id)
 
     db.init_app(app)
     return app

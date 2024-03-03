@@ -20,7 +20,7 @@
           </ul>
           <ul>
             {% if g.user %}
-              <li><span>{{ g.user['email'] }}</span>
+              <li><span>{{ g.user.email }}</span>
               <li><a href="{{ url_for('logout') }}">Log Out</a>
             {% else %}
             <li>
