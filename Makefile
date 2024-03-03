@@ -17,7 +17,7 @@ dev: # Kick-off local dev environment & start coding! 💻
 setup: # Setup local dev environment
 	@echo "Installing.."
 	pip install -r requirements.txt
-	flask init-db
+	flask --app application init-db
 	@echo "Done."
 test: # Run tests
 	@echo "Running tests.."
