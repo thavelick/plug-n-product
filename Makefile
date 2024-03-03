@@ -19,7 +19,14 @@ setup: # Setup local dev environment
 	pip install -r requirements.txt
 	flask init-db
 	@echo "Done."
+test: # Run tests
+	@echo "Running tests.."
+	pytest
+	@echo "Done."
 
+test-with-coverage: # Run tests with coverage
+	@echo "Running tests with coverage.."
+	coverage run -m pytest && coverage report && coverage html
 # -----------------------------------------------------------
 # CAUTION: If you have a file with the same name as make
 # command, you need to add it to .PHONY below, otherwise it
