@@ -27,6 +27,13 @@ test: # Run tests
 test-with-coverage: # Run tests with coverage
 	@echo "Running tests with coverage.."
 	coverage run -m pytest && coverage report && coverage html
+
+# This probably isn't adviable when first starting out, but once you have a lot of tests, this
+# should replace `make test`.
+test-dist: # Run tests accross cpus
+	@echo "Running tests with dist.."
+	pytest -n auto
+	@echo "Done."
 # -----------------------------------------------------------
 # CAUTION: If you have a file with the same name as make
 # command, you need to add it to .PHONY below, otherwise it
