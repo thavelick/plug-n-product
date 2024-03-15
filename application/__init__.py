@@ -44,6 +44,7 @@ def create_app(test_config=None):
             except UserCreationError as error:
                 flash(str(error), "error")
             else:
+                flash("You have successfully registered! Please sign in.", "success")
                 return redirect(url_for("signin"))
         return render_template("register.html", email=request.form.get("email", ""))
 

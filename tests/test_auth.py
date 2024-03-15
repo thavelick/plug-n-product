@@ -10,6 +10,9 @@ def test_register(client, app):
         data={"email": "a@example.com", "password": "a-decently-long-password"},
     )
     assert response.headers["Location"] == "/sign-in"
+    with client:
+        response = client.get("/sign-in")
+        assert b"You have successfully registered! Please sign in." in response.data
 
     with app.app_context():
         assert (

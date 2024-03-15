@@ -5,6 +5,13 @@
   padding: 5px;
 }
 
+.flashes .success {
+  color: #155724;
+  background-color: #d4edda;
+  border: 1px solid #155724;
+  padding: 5px;
+}
+
 .flashes li {
   list-style: none;
 }
