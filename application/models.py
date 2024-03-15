@@ -1,3 +1,4 @@
+import re
 from collections import namedtuple
 from werkzeug.security import generate_password_hash, check_password_hash
 from application import db
@@ -56,6 +57,12 @@ class User(namedtuple("User", "id email password created_on")):
             raise UserCreationError("Password is required.")
         if len(password) < 10:
             raise UserCreationError("Password must be at least 10 characters long.")
+        # This regex comes from
+        #   https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email#validation
+        # It should match the native email validation from the browser.
+        VALID_EMAIL_REGEX = r"/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;"
+        if not re.match(VALID_EMAIL_REGEX, email):
+            raise UserCreationError("Email is invalid.")
 
         connection = db.get_db_connection()
         try:

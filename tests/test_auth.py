@@ -32,6 +32,7 @@ def test_register(client, app):
         ("a@example.com", "", b"Password is required."),
         ("test@example.com", "a-decently-long-password", b"already registered"),
         ("test@example.com", "short", b"Password must be at least 10 characters long."),
+        ("test@", "a-decently-long-password", b"Invalid email."),
     ),
 )
 def test_register_validate_input(client, email, password, message):
