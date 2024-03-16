@@ -85,12 +85,26 @@ def test_signin_validate_input(auth, email, password, message):
     assert message in response.data
 
 
-def test_signout(client, auth):
+def test_logout(client, auth):
     auth.signin()
 
     with client:
         auth.logout()
         assert "user_id" not in session
+
+
+def test_logout_htmx(client, auth):
+    auth.signin()
+
+    with client:
+        response = client.get("/logout")
+        assert response.headers["Location"] == "/"
+        assert "user_id" not in session
+
+        # Ensure the out of bound update to the top nav is sent
+        assert "Sign-in" in client.get("/", headers={"HX-Request": "true"}).data.decode(
+            "utf-8"
+        )
 
 
 @pytest.mark.parametrize(
