@@ -11,6 +11,14 @@ def test_home(client):
     assert "Welcome!" in response.data.decode("utf-8")
 
 
+def test_home_htmx(client):
+    response = client.get("/", headers={"HX-Request": "true"})
+    html = response.data.decode("utf-8")
+    assert "Welcome!" in html
+    assert '<title id="title" hx-swap-oob="true">Welcome!</title>' in html
+    assert "<head>" not in html
+
+
 def test_home_signed_in(client, auth):
     auth.signin()
     response = client.get("/")

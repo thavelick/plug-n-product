@@ -60,7 +60,7 @@ class User(namedtuple("User", "id email password created_on")):
         # This regex comes from
         #   https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email#validation
         # It should match the native email validation from the browser.
-        VALID_EMAIL_REGEX = r"/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;"
+        VALID_EMAIL_REGEX = r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
         if not re.match(VALID_EMAIL_REGEX, email):
             raise UserCreationError("Email is invalid.")
 
