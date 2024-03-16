@@ -43,7 +43,7 @@ def create_app(test_config=None):
                     template, block="title", tag_name="title", tag_id="title", **kwargs
                 ),
             ]
-            if request.args.get("update_top_nav"):
+            if "top_nav" in session.get("oob_updates", []):
                 blocks.append(
                     oob_block_tag(
                         "base.html",
@@ -53,6 +53,7 @@ def create_app(test_config=None):
                         **kwargs,
                     )
                 )
+            session.pop("oob_updates", None)
             return " ".join(blocks)
 
         return render_template(template, **kwargs)
@@ -113,7 +114,8 @@ def create_app(test_config=None):
     @app.route("/logout")
     def logout():
         session.clear()
-        return redirect(url_for("index", update_top_nav="true"))
+        session["oob_updates"] = ["top_nav"]
+        return redirect(url_for("index"))
 
     @app.before_request
     def load_logged_in_user():
