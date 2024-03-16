@@ -16,16 +16,16 @@
         <nav>
           <ul>
             <li>
-              <a href="{{ url_for('index') }}">Home</a>
+              {{ link("index", "Home") }}
             </li>
           </ul>
           <ul>
             {% if g.user %}
               <li><span>{{ g.user.email }}</span>
-              <li><a href="{{ url_for('logout') }}">Log Out</a>
+              <li>{{ link("logout", "Log Out") }}</li>
             {% else %}
             <li>
-              <a href="{{ url_for('signin') }}">Sign-in</a>
+              {{ link("signin", "Sign-in") }}
             </li>
             {% endif %}
           </ul>
