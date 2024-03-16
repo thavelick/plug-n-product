@@ -13,7 +13,9 @@
   <body>
     <header>
       <div class="container">
-        <nav>
+        <nav id="top_nav">
+          {% block top_nav %}
+          {% from 'link.html' import link %}
           <ul>
             <li>
               {{ link("index", "Home") }}
@@ -29,6 +31,7 @@
             </li>
             {% endif %}
           </ul>
+          {% endblock %}
         </nav>
       </div>
     </header>

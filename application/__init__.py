@@ -31,16 +31,30 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    def oob_block_tag(template, block, tag_name, tag_id, **kwargs):
+        content = render_block(template, block, **kwargs)
+        return f'<{tag_name} id="{tag_id}" hx-swap-oob="true">{content}</{tag_name}>'
+
     def render_htmx_template(template, block, **kwargs):
         if request.headers.get("HX-Request"):
-            title = render_block(template, "title", **kwargs)
-            new_title_tag = f'<title id="title" hx-swap-oob="true">{title}</title>'
-            return " ".join(
-                [
-                    render_block(template, block, **kwargs),
-                    new_title_tag,
-                ]
-            )
+            blocks = [
+                render_block(template, block, **kwargs),
+                oob_block_tag(
+                    template, block="title", tag_name="title", tag_id="title", **kwargs
+                ),
+            ]
+            if request.args.get("update_top_nav"):
+                blocks.append(
+                    oob_block_tag(
+                        "base.html",
+                        block="top_nav",
+                        tag_name="nav",
+                        tag_id="top_nav",
+                        **kwargs,
+                    )
+                )
+            return " ".join(blocks)
+
         return render_template(template, **kwargs)
 
     @app.route("/")
@@ -99,7 +113,7 @@ def create_app(test_config=None):
     @app.route("/logout")
     def logout():
         session.clear()
-        return redirect(url_for("index"))
+        return redirect(url_for("index", update_top_nav="true"))
 
     @app.before_request
     def load_logged_in_user():
