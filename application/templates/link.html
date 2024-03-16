@@ -1,0 +1,3 @@
+{% macro link(route, text) %}
+  <a href="{{ url_for(route) }}" hx-get="{{ url_for(route) }}" hx-target="main" hx-push-url="true">{{ text }}</a>
+{% endmacro %}

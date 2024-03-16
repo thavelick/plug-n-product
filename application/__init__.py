@@ -1,4 +1,5 @@
 import os
+from jinja2_fragments.flask import render_block
 from flask import (
     Flask,
     flash,
@@ -30,6 +31,18 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    def render_htmx_template(template, block, **kwargs):
+        if request.headers.get("HX-Request"):
+            title = render_block(template, "title", **kwargs)
+            new_title_tag = f'<title id="title" hx-swap-oob="true">{title}</title>'
+            return " ".join(
+                [
+                    render_block(template, block, **kwargs),
+                    new_title_tag,
+                ]
+            )
+        return render_template(template, **kwargs)
+
     @app.route("/")
     def index():
         return render_template("index.html")
@@ -46,7 +59,9 @@ def create_app(test_config=None):
             else:
                 flash("You have successfully registered! Please sign in.", "success")
                 return redirect(url_for("signin"))
-        return render_template("register.html", email=request.form.get("email", ""))
+        return render_htmx_template(
+            "register.html", "content", email=request.form.get("email", "")
+        )
 
     @app.route("/sign-in", methods=["GET", "POST"])
     def signin():
@@ -65,7 +80,9 @@ def create_app(test_config=None):
                 "error",
             )
 
-        return render_template("signin.html", email=request.form.get("email", ""))
+        return render_htmx_template(
+            "signin.html", "content", email=request.form.get("email", "")
+        )
 
     @app.route("/register/password", methods=["POST"])
     @app.route("/sign-in/password", methods=["POST"])

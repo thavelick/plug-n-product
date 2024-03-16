@@ -1,3 +1,4 @@
+{% from 'link.html' import link %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -7,7 +8,7 @@
     <script src="{{ url_for('static', filename='/vendor/js/htmx.1.9.10.min.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='/vendor/css/pico.2.0.3.jade.min.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='/css/style.css') }}" />
-    <title>{% block title %}{% endblock %}</title>
+    <title id="title">{% block title %}{% endblock %}</title>
   </head>
   <body>
     <header>
