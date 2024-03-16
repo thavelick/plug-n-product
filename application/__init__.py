@@ -42,6 +42,13 @@ def create_app(test_config=None):
                 oob_block_tag(
                     template, block="title", tag_name="title", tag_id="title", **kwargs
                 ),
+                oob_block_tag(
+                    "base.html",
+                    block="flash_messages",
+                    tag_name="div",
+                    tag_id="flash_messages",
+                    **kwargs,
+                ),
             ]
             if "top_nav" in session.get("oob_updates", []):
                 blocks.append(
@@ -88,6 +95,7 @@ def create_app(test_config=None):
             if user:
                 session.clear()
                 session["user_id"] = user.id
+                session["oob_updates"] = ["top_nav"]
                 return redirect(url_for("index"))
 
             flash(

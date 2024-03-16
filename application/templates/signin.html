@@ -10,18 +10,18 @@
     <fieldset>
       <label>
         Email:
-        <input type="email" name="email" placeholder="name@email.com" autocomplete="email" value="{{ email }}" />
+        <input type="email" name="email" placeholder="name@email.com" autocomplete="email" value="{{ email }}">
       </label>
       <label>
         Password:
         {% include 'password_field.html' %}
       </label>
       <label>
-        <input type="checkbox" name="show_password" hx-post="/sign-in/password" hx-target="#password" hx-swap="outerHTML" /> Show password
+        <input type="checkbox" name="show_password" hx-post="/sign-in/password" hx-target="#password" hx-swap="outerHTML" > Show password
       </label>
     </fieldset>
 
-    <input type="submit" value="Sign In" />
+    <input type="submit" value="Sign In" hx-post="/sign-in" hx-target="#content">
   </form>
   <p>Don't have an account? {{ link("register", "Register") }}
 </div>
