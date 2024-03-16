@@ -40,6 +40,15 @@ def test_register_validate_input(client, email, password, message):
     assert message in response.data
 
 
+def test_register_when_logged_in(client, auth):
+    auth.signin()
+    register_response = client.get("/register")
+    assert register_response.headers["Location"] == "/"
+
+    home_response = client.get("/")
+    assert "You are already signed in." in home_response.data.decode("utf-8")
+
+
 def test_signin(client, auth):
     assert client.get("/sign-in").status_code == 200
     response = auth.signin()

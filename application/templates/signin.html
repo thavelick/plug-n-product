@@ -21,7 +21,7 @@
       </label>
     </fieldset>
 
-    <input type="submit" value="Sign In" hx-post="/sign-in" hx-target="#content">
+    <input type="submit" value="Sign In" hx-post="/sign-in" hx-target="#content" hx-push-url="true">
   </form>
   <p>Don't have an account? {{ link("register", "Register") }}
 </div>

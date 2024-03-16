@@ -1,3 +1,4 @@
+import functools
 import os
 from jinja2_fragments.flask import render_block
 from flask import (
@@ -30,6 +31,16 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
+
+    def require_logged_out(view):
+        @functools.wraps(view)
+        def wrapped_view(**kwargs):
+            if g.user:
+                flash("You are already signed in.", "warning")
+                return redirect(url_for("index"))
+            return view(**kwargs)
+
+        return wrapped_view
 
     def oob_block_tag(template, block, tag_name, tag_id, **kwargs):
         content = render_block(template, block, **kwargs)
@@ -70,6 +81,7 @@ def create_app(test_config=None):
         return render_htmx_template("index.html", "content")
 
     @app.route("/register", methods=["GET", "POST"])
+    @require_logged_out
     def register():
         if request.method == "POST":
             email = request.form["email"]
@@ -86,6 +98,7 @@ def create_app(test_config=None):
         )
 
     @app.route("/sign-in", methods=["GET", "POST"])
+    @require_logged_out
     def signin():
         if request.method == "POST":
             email = request.form["email"]

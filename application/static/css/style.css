@@ -1,19 +1,26 @@
+.flashes li {
+  padding: 5px;
+  border-width: 1px;
+  border-style: solid;
+  list-style: none;
+}
+
+.flashes .warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #856404;
+}
+
 .flashes .error {
   color: #721c24;
   background-color: #f8d7da;
-  border: 1px solid #721c24;
-  padding: 5px;
+  border-color: #721c24;
 }
 
 .flashes .success {
   color: #155724;
   background-color: #d4edda;
-  border: 1px solid #155724;
-  padding: 5px;
-}
-
-.flashes li {
-  list-style: none;
+  border-color: #155724;
 }
 
 footer {
