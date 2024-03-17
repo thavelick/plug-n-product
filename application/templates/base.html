@@ -24,10 +24,10 @@
           <ul>
             {% if g.user %}
               <li><span>{{ g.user.email }}</span>
-              <li>{{ link("logout", "Log Out") }}</li>
+              <li>{{ link("auth.logout", "Log Out") }}</li>
             {% else %}
             <li>
-              {{ link("signin", "Sign-in") }}
+              {{ link("auth.signin", "Sign-in") }}
             </li>
             {% endif %}
           </ul>

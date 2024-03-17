@@ -4,14 +4,14 @@ from application.db import get_db_connection
 
 
 def test_register(client, app):
-    assert client.get("/register").status_code == 200
+    assert client.get("/auth/register").status_code == 200
     response = client.post(
-        "/register",
+        "/auth/register",
         data={"email": "a@example.com", "password": "a-decently-long-password"},
     )
-    assert response.headers["Location"] == "/sign-in"
+    assert response.headers["Location"] == "/auth/sign-in"
     with client:
-        response = client.get("/sign-in")
+        response = client.get("/auth/sign-in")
         assert b"You have successfully registered! Please sign in." in response.data
 
     with app.app_context():
@@ -36,13 +36,15 @@ def test_register(client, app):
     ),
 )
 def test_register_validate_input(client, email, password, message):
-    response = client.post("/register", data={"email": email, "password": password})
+    response = client.post(
+        "/auth/register", data={"email": email, "password": password}
+    )
     assert message in response.data
 
 
 def test_register_when_logged_in(client, auth):
     auth.signin()
-    register_response = client.get("/register")
+    register_response = client.get("/auth/register")
     assert register_response.headers["Location"] == "/"
 
     home_response = client.get("/")
@@ -50,7 +52,7 @@ def test_register_when_logged_in(client, auth):
 
 
 def test_signin(client, auth):
-    assert client.get("/sign-in").status_code == 200
+    assert client.get("/auth/sign-in").status_code == 200
     response = auth.signin()
     assert response.headers["Location"] == "/"
 
@@ -106,7 +108,7 @@ def test_logout_htmx(client, auth):
     auth.signin()
 
     with client:
-        response = client.get("/logout")
+        response = client.get("/auth/logout")
         assert response.headers["Location"] == "/"
         assert "user_id" not in session
 
@@ -119,10 +121,8 @@ def test_logout_htmx(client, auth):
 @pytest.mark.parametrize(
     ("path", "show_password", "expected_type"),
     (
-        ("/register/password", "on", "text"),
-        ("/register/password", None, "password"),
-        ("/sign-in/password", "on", "text"),
-        ("/sign-in/password", None, "password"),
+        ("/auth/password-field", "on", "text"),
+        ("/auth/password-field", None, "password"),
     ),
 )
 def test_password_field(client, path, show_password, expected_type):

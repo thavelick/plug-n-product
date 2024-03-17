@@ -17,13 +17,13 @@
         {% include 'password_field.html' %}
       </label>
       <label>
-        <input type="checkbox" name="show_password" hx-post="/register/password" hx-target="#password" hx-swap="outerHTML" /> Show password
+        <input type="checkbox" name="show_password" hx-post="{{ url_for("auth.password_field") }}" hx-target="#password" hx-swap="outerHTML" > Show password
       </label>
     </fieldset>
 
-    <input type="submit" value="Register" hx-post="/register" hx-target="#content" hx-push-url="true">
+    <input type="submit" value="Register" hx-post="{{ url_for("auth.register") }}" hx-target="#content" hx-push-url="true">
   </form>
-  <p>Already have an account? {{ link("signin", "Sign in") }}</p>
+  <p>Already have an account? {{ link("auth.signin", "Sign in") }}</p>
 </div>
 {% endblock %}
 

@@ -46,11 +46,11 @@ class AuthActions:
 
     def signin(self, email="test@example.com", password="test"):
         return self._client.post(
-            "/sign-in", data={"email": email, "password": password}
+            "/auth/sign-in", data={"email": email, "password": password}
         )
 
     def logout(self):
-        return self._client.get("/logout")
+        return self._client.get("/auth/logout")
 
 
 @pytest.fixture
