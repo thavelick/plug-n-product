@@ -3,9 +3,10 @@
 {% block title %}Welcome!{% endblock %}
 
 {% block content %}
+{% from 'link.html' import link %}
 <h1>Welcome!</h1>
 <p>
-  This is the App, something cool is surely coming!
+This is the App, something cool is surely coming. Check out our {{ link('pricing', 'pricing') }}.
 </p>
 {% endblock %}
 

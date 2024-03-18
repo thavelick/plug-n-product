@@ -43,6 +43,10 @@ footer nav ul li {
   padding: 0 auto;
   margin: 0 auto;
 }
+.pricing {
+  text-align: center;
+}
+
 
 @media (min-width: 1280px) {
   .container {

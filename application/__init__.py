@@ -31,6 +31,10 @@ def create_app(test_config=None):
     def index():
         return render_htmx_template("index.html", "content")
 
+    @app.route("/pricing")
+    def pricing():
+        return render_htmx_template("pricing.html", "content")
+
     @app.before_request
     def load_logged_in_user():
         user_id = session.get("user_id")
