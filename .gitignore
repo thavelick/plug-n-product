@@ -1,6 +1,7 @@
 venv/
 .venv/
 uv.lock
+scratch/
 
 *.pyc
 __pycache__/
