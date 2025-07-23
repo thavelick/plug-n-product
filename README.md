@@ -17,24 +17,31 @@ Eventually this template should include:
 
 ## Quick-start
 
-1. Set up a virtualenv
+This project uses [uv](https://docs.astral.sh/uv/) for dependency management.
+
+1. Install uv (if you haven't already):
 ```
-python -m venv venv
-source venv/activate
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
-2. Install dependencies and initialize the db
+2. Initialize the database:
 ```
 make setup
 ```
-3. Run the local dev server
+3. Run the local dev server:
 ```
 make dev
 ```
-4. Run the tests
+4. Run the tests:
 ```
 make test
 ```
-5. Get help
+5. Get help:
 ```
 make
 ```
+
+## Development
+
+- `make update` - Update all dependencies to their latest versions
+- `make test-with-coverage` - Run tests with coverage reporting
+- `make test-dist` - Run tests across multiple CPUs
