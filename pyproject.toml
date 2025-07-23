@@ -3,8 +3,16 @@ name = "application"
 version = "1.0.0"
 description = "TBA"
 dependencies = [
-    "flask",
+    "blinker>=1.7.0",
+    "click>=8.1.7",
+    "flask>=3.0.2",
+    "itsdangerous>=2.1.2",
+    "jinja2>=3.1.3",
+    "jinja2-fragments>=1.3.0",
+    "markupsafe>=2.1.5",
+    "werkzeug>=3.0.1",
 ]
+requires-python = ">=3.12"
 
 [build-system]
 requires = ["flit_core<4"]
@@ -16,4 +24,22 @@ testpaths = ["tests"]
 [tool.coverage.run]
 branch = true
 source = ["application"]
+
+[dependency-groups]
+dev = [
+    "astroid>=3.0.3",
+    "coverage>=7.4.3",
+    "dill>=0.3.8",
+    "execnet>=2.0.2",
+    "iniconfig>=2.0.0",
+    "isort>=5.13.2",
+    "mccabe>=0.7.0",
+    "packaging>=23.2",
+    "platformdirs>=4.2.0",
+    "pluggy>=1.4.0",
+    "pylint>=3.0.4",
+    "pytest>=8.0.2",
+    "pytest-xdist>=3.5.0",
+    "tomlkit>=0.12.3",
+]
 
