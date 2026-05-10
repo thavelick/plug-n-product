@@ -28,7 +28,7 @@ source = ["application"]
 [dependency-groups]
 dev = [
     "astroid>=3.3.11",
-    "coverage>=7.9.2",
+    "coverage>=7.13.5",
     "dill>=0.4.0",
     "execnet>=2.1.1",
     "iniconfig>=2.1.0",
